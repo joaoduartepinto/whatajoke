@@ -1,6 +1,5 @@
 import click
-from whatajoke.joke_service.joke_service import get_joke
-from whatajoke.whatsapp_service.whatsapp_service import send_message
+import whatajoke.service as service
 
 
 @click.command()
@@ -29,14 +28,9 @@ def send_joke(group, category, flag):
     # Parse choice to String
     category = str(category)
     flag = str(flag)
+    group = str(group)
 
-    # Get joke from joke service
-    joke = get_joke(category, flag)
-    click.echo(joke)
-
-    # Send joke to Whatsapp Service
-    click.echo(group)
-    send_message(group, joke)
+    service.send_joke(group, category, flag)
 
 
 def main():

@@ -1,0 +1,4 @@
+[config]
+api_url=https://v2.jokeapi.dev/joke/
+categories=['Any' ,'Programming', 'Misc', 'Dark', 'Pun', 'Spooky', 'Christmas']
+flags=['none', 'nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit']
