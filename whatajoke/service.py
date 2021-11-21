@@ -2,7 +2,7 @@ from whatajoke.joke.joke_service import get_joke
 from whatajoke.whatsapp.whatsapp_service import send_message
 
 
-def send_joke(group, category, flag):
+def send_joke(group: str, category: str, flag: str):
     # Get joke from joke service
     joke = get_joke(category, flag)
 

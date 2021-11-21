@@ -3,19 +3,19 @@ import whatajoke.joke.url_helper as url_helper
 import whatajoke.joke.joke_formatter as joke_formatter
 
 
-# https://sv443.net/jokeapi/v2/#try-it
-
-
-def get_joke(category, flag):
+def get_joke(category: str, flag: str):
     # Get formatted url
     url = url_helper.get_url(category, flag)
 
     # Send request
     response = requests.get(url)
-    print(response.content)
+    # print(response.content)
 
-    # Format joke
-    joke = joke_formatter.format_joke(response)
+    if response.status_code == 200:
+        # Format joke
+        joke = joke_formatter.format_joke(response.content)
+    else:
+        raise Exception("Ups! Something went wrong on joke request.")
 
     print(joke)
     return joke

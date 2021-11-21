@@ -7,8 +7,8 @@ config = configparser.ConfigParser()
 config.read(configuration_file)
 
 
-def get_url(category, flag):
-    base_url = str(config['config']['api_url'])
+def get_url(category: str, flag: str) -> str:
+    base_url = config['config']['api_url']
 
     formatted_category = get_category(category)
     query = get_query(flag)
@@ -18,7 +18,7 @@ def get_url(category, flag):
     return full_url
 
 
-def get_category(category):
+def get_category(category: str) -> str:
     categories = config['config']['categories']
 
     capitalized_category = str(category).capitalize()
@@ -29,12 +29,13 @@ def get_category(category):
         raise Exception('Invalid category')
 
 
-def get_query(flag):
+def get_query(flag: str) -> str:
     base_query = "?blacklistFlags="
 
     flags = config['config']['flags']
 
     if flag in flags:
+        # When flag is 'none', api doesn't need query params
         if flag == 'none':
             return ''
         full_query = base_query + flag

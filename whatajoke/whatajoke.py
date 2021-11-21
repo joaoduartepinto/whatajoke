@@ -1,5 +1,5 @@
 import click
-import whatajoke.service as service
+import whatajoke.service
 
 
 @click.command()
@@ -8,12 +8,12 @@ import whatajoke.service as service
               prompt="Name of the group or person to send the joke to",
               help="Name of the group or person to send the joke to!")
 @click.option("--category", "-c",
-              type=click.Choice(['any', 'programming', 'misc', 'dark', 'pun', 'spooky', 'christmas'],
+              type=click.Choice(["any", "programming", "misc", "dark", "pun", "spooky", "christmas"],
                                 case_sensitive=False),
               default="any",
               help="Category of the joke. Default value is \"any\".")
 @click.option("--flag", "-f",
-              type=click.Choice(['none', 'nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit'],
+              type=click.Choice(["none", "nsfw", "religious", "political", "racist", "sexist", "explicit"],
                                 case_sensitive=False),
               default="none",
               help="Flag to add to category. Default value is \"none\".")
@@ -25,12 +25,19 @@ def send_joke(group, category, flag):
     :param flag:
     :return:
     """
-    # Parse choice to String
-    category = str(category)
-    flag = str(flag)
-    group = str(group)
+    try:
+        # Parse choice to String
+        category = str(category)
+        flag = str(flag)
+        group = str(group)
 
-    service.send_joke(group, category, flag)
+        whatajoke.service.send_joke(group, category, flag)
+
+    # except Exception as e:
+    #   print(e)
+
+    finally:
+        print("See you soon!")
 
 
 def main():
