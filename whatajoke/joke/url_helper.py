@@ -14,7 +14,6 @@ def get_url(category: str, flag: str) -> str:
     query = get_query(flag)
 
     full_url = base_url + formatted_category + query
-    print(full_url)
     return full_url
 
 

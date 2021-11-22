@@ -3,7 +3,11 @@ import whatajoke.joke.url_helper as url_helper
 import whatajoke.joke.joke_formatter as joke_formatter
 
 
-def get_joke(category: str, flag: str):
+def get_joke(category: str, flag: str) -> str:
+    """
+
+    :rtype: object
+    """
     # Get formatted url
     url = url_helper.get_url(category, flag)
 

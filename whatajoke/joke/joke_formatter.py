@@ -1,6 +1,6 @@
 import json
 
-joke_signature = "\n \n----------------------------\nJoke sent with whatajoke! 🤪"
+joke_signature = "\nJoke sent with whatajoke!"
 
 
 def is_two_part(content: str) -> bool:
@@ -8,14 +8,21 @@ def is_two_part(content: str) -> bool:
 
 
 def format_one_part_joke(raw_joke: json) -> str:
-    return raw_joke["joke"]
+    return f'''{raw_joke["joke"]}
+    
+            -------------------
+            {joke_signature}'''
 
 
 def format_two_part_joke(raw_joke: json) -> str:
     setup = raw_joke["setup"]
     delivery = raw_joke["delivery"]
 
-    full_joke = setup + "\n \n" + delivery
+    full_joke = f'''{setup}  
+                {delivery}
+                
+                -------------------
+                {joke_signature}'''
 
     return full_joke
 
@@ -30,4 +37,4 @@ def format_joke(http_response_content: json) -> str:
     else:
         joke = format_one_part_joke(parsed_content)
 
-    return joke + joke_signature
+    return joke
