@@ -18,16 +18,16 @@ def select_contact_xpath(contact) -> str:
 
 
 def assert_correct_contact(group: str, group_title_element):
-    try:
-        assert group_title_element.text == group
-    finally:
-        print('Can\'t open the correct group! Open a issue on GitHub!')
+    assert group_title_element.text == group
 
 
-def send_message(group: str, message: str):
+def send_message(group: str, message: str, headed: bool):
     try:
-        options = webdriver.ChromeOptions();
+        options = webdriver.ChromeOptions()
         options.add_argument('--user-data-dir=./User_Data')
+
+        if not headed:
+            options.add_argument('--headless')
 
         driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
 

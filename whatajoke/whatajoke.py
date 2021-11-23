@@ -17,9 +17,13 @@ import whatajoke.service
                                 case_sensitive=False),
               default="none",
               help="Flag to add to category. Default value is \"none\".")
-def send_joke(group, category, flag):
+@click.option("--headed", "-h",
+              is_flag=True,
+              help="Runs in headed mode.")
+def send_joke(group, category, flag, headed):
     """
 
+    :param headed:
     :param group:
     :param category:
     :param flag:
@@ -31,7 +35,7 @@ def send_joke(group, category, flag):
         flag = str(flag)
         group = str(group)
 
-        whatajoke.service.send_joke(group, category, flag)
+        whatajoke.service.send_joke(group, category, flag, headed)
 
     # except Exception as e:
     #   print(e)
