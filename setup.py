@@ -2,7 +2,6 @@ from setuptools import setup
 import pathlib
 import pkg_resources
 
-
 with pathlib.Path('requirements.txt').open() as requirements_txt:
     install_requires = [
         str(requirement)
@@ -13,9 +12,10 @@ with pathlib.Path('requirements.txt').open() as requirements_txt:
 setup(
     name='whatajoke',
     version='1.0',
-    packages=[''],
-    url='',
-    license='',
+    packages=['whatajoke'],
+    url='https://github.com/joaoduartepinto/whatajoke',
+    download_url='https://github.com/joaoduartepinto/whatajoke/archive/refs/tags/v1.0.tar.gz',
+    license='GPLv3',
     author='João Duarte Pinto',
     author_email='joaoduartepinto@outlook.com',
     description='Send a joke to a Whatsapp group!',
