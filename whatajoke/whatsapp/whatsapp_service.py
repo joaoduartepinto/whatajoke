@@ -2,7 +2,6 @@ import time
 
 from selenium import webdriver
 from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -48,9 +47,9 @@ def send_message(group: str, message: str, headed: bool):
 
         message_box = WebDriverWait(driver, 50) \
             .until(lambda driver: driver.find_element_by_xpath(input_message_xpath))
-        # TODO: set text into element to not send multiple messages
-        # driver.execute_script(f"arguments[0]\\.innerText = '{message}';", message_box)
         message_box.send_keys(message + Keys.ENTER)
+
+        # sleep is needed to wait for sending the message
         time.sleep(3)
 
     finally:
