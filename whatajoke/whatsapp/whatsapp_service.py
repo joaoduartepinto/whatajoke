@@ -1,3 +1,5 @@
+import os
+import shutil
 import time
 
 from selenium import webdriver
@@ -7,9 +9,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 whatsapp_url: str = "https://web.whatsapp.com/"
 
+sleep_time = 3
+
 input_search_xpath = "//*[@id=\"side\"]/div[1]/div/label/div/div[2]"
 input_message_xpath = "//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[2]"
 open_group_xpath = "//*[@id=\"main\"]/header/div[2]/div[1]/div/span"
+qr_xpath = "//*[@id=\"app\"]/div[1]/div/div[2]/div[1]/div/div[2]/div/canvas"
 
 
 def select_contact_xpath(contact) -> str:
@@ -50,7 +55,36 @@ def send_message(group: str, message: str, headed: bool):
         message_box.send_keys(message + Keys.ENTER)
 
         # sleep is needed to wait for sending the message
-        time.sleep(3)
+        time.sleep(sleep_time)
+
+    finally:
+        driver.quit()
+
+
+def login():
+    dirname = os.path.dirname(__file__)
+
+    relative_path_to_user_data_folder = "../../User_Data"
+    user_data_folder_path = os.path.join(dirname, relative_path_to_user_data_folder)
+
+    if os.path.isdir(user_data_folder_path):
+        shutil.rmtree(user_data_folder_path)
+
+    try:
+        options = webdriver.ChromeOptions()
+        options.add_argument('--user-data-dir=./User_Data')
+
+        driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
+
+        driver.get(whatsapp_url)
+
+        WebDriverWait(driver, 50) \
+            .until(lambda driver: driver.find_element_by_xpath(qr_xpath))
+
+        WebDriverWait(driver, 50) \
+            .until_not(lambda driver: driver.find_element_by_xpath(qr_xpath))
+
+        time.sleep(sleep_time)
 
     finally:
         driver.quit()
