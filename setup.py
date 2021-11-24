@@ -1,13 +1,10 @@
+import setuptools
 from setuptools import setup
-
-# TODO: this needs to change!
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
 
 setup(
     name='whatajoke',
-    version='1.1.1',
-    packages=['whatajoke'],
+    version='1.1.8',
+    packages=setuptools.find_packages(),
     url='https://github.com/joaoduartepinto/whatajoke',
     download_url='https://github.com/joaoduartepinto/whatajoke/archive/refs/tags/v1.0.tar.gz',
     license='GPLv3',
@@ -17,5 +14,11 @@ setup(
     entry_points={
         'console_scripts': ['wj=whatajoke.whatajoke:main']
     },
-    install_requires=required,
+    install_requires=['whatajoke==1.1.8',
+                      'click==8.0.3',
+                      'requests==2.26.0',
+                      'selenium==4.1.0',
+                      'setuptools==57.0.0',
+                      'webdriver_manager==3.5.2',
+                      'cryptography==3.1.1'],
 )
