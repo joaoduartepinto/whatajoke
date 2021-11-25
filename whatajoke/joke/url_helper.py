@@ -1,15 +1,7 @@
-import configparser
-
-configuration_file = 'config.txt'
-
-# Read configuration file
-config = configparser.ConfigParser()
-config.read(configuration_file)
+base_url = "https://v2.jokeapi.dev/joke/"
 
 
 def get_url(category: str, flag: str) -> str:
-    base_url = config['config']['api_url']
-
     formatted_category = get_category(category)
     query = get_query(flag)
 
@@ -18,27 +10,18 @@ def get_url(category: str, flag: str) -> str:
 
 
 def get_category(category: str) -> str:
-    categories = config['config']['categories']
-
     capitalized_category = str(category).capitalize()
 
-    if capitalized_category in categories:
-        return capitalized_category
-    else:
-        raise Exception('Invalid category')
+    return capitalized_category
 
 
 def get_query(flag: str) -> str:
     base_query = "?blacklistFlags="
 
-    flags = config['config']['flags']
+    # When flag is 'none', api doesn't need query params
+    if flag == 'none':
+        return ''
 
-    if flag in flags:
-        # When flag is 'none', api doesn't need query params
-        if flag == 'none':
-            return ''
-        full_query = base_query + flag
-    else:
-        raise Exception('Invalid flag')
+    full_query = base_query + flag
 
     return full_query
