@@ -9,21 +9,24 @@ A python package that sends jokes to your friends!
 Must be installed:
 - Chrome
 - Python
+- pip
 
 ## Installation
 
-Install whatajoke using source code
+Install whatajoke using source code (can be used with the virtual environment active):
 
 ```bash
   git clone https://github.com/joaoduartepinto/whatajoke.git
   cd whatajoke/
+  python3 -m venv env
+  source env/bin/activate
   python setup.py install
 ```
 
-~Install whatajoke with pip~ [TBD]
+Install whatajoke with pip (can be used at any time)
 
 ```bash
-  pip install whatajoke
+  python3 -m pip install whatajoke --user
 ```
 
 ## Usage
