@@ -30,7 +30,7 @@ def send(group, category, flag, headed):
         whatajoke.service.send_joke(group, category, flag, headed)
 
     except Exception as e:
-      print(e)
+        print(e)
 
     finally:
         print("See you soon!")

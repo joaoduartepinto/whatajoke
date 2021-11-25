@@ -32,6 +32,12 @@ def send_message(group: str, message: str, headed: bool):
 
         if not headed:
             options.add_argument('--headless')
+            options.add_argument("--window-size=1920,1080")
+            options.add_argument('--ignore-certificate-errors')
+            options.add_argument('--allow-running-insecure-content')
+            user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 ' \
+                         'Safari/537.36 '
+            options.add_argument(f'user-agent={user_agent}')
 
         driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
 
@@ -53,6 +59,7 @@ def send_message(group: str, message: str, headed: bool):
         message_box = WebDriverWait(driver, 50) \
             .until(lambda driver: driver.find_element_by_xpath(input_message_xpath))
         message_box.send_keys(message + Keys.ENTER)
+
 
         # sleep is needed to wait for sending the message
         time.sleep(sleep_time)
