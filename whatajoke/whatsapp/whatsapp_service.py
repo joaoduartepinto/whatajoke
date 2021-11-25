@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+from os.path import abspath
 
 from selenium import webdriver
 from selenium.webdriver import Keys
@@ -17,6 +18,16 @@ open_group_xpath = "//*[@id=\"main\"]/header/div[2]/div[1]/div/span"
 qr_xpath = "//*[@id=\"app\"]/div[1]/div/div[2]/div[1]/div/div[2]/div/canvas"
 
 
+def get_user_data_folder_abs_path() -> str:
+    dirname = os.path.dirname(__file__)
+
+    relative_path_to_user_data_folder = "../../User_Data"
+    user_data_folder_path = os.path.join(dirname, relative_path_to_user_data_folder)
+    user_data_folder_path_abs = abspath(user_data_folder_path)
+
+    return user_data_folder_path_abs
+
+
 def select_contact_xpath(contact) -> str:
     return '//span[@title="{}"]'.format(contact)
 
@@ -26,9 +37,11 @@ def assert_correct_contact(group: str, group_title_element):
 
 
 def send_message(group: str, message: str, headed: bool):
+    user_data_folder_abs_path = get_user_data_folder_abs_path()
+
     try:
         options = webdriver.ChromeOptions()
-        options.add_argument('--user-data-dir=./User_Data')
+        options.add_argument(f'--user-data-dir={user_data_folder_abs_path}')
 
         if not headed:
             options.add_argument('--headless')
@@ -60,7 +73,6 @@ def send_message(group: str, message: str, headed: bool):
             .until(lambda driver: driver.find_element_by_xpath(input_message_xpath))
         message_box.send_keys(message + Keys.ENTER)
 
-
         # sleep is needed to wait for sending the message
         time.sleep(sleep_time)
 
@@ -69,17 +81,14 @@ def send_message(group: str, message: str, headed: bool):
 
 
 def login():
-    dirname = os.path.dirname(__file__)
+    user_data_folder_abs_path = get_user_data_folder_abs_path()
 
-    relative_path_to_user_data_folder = "../../User_Data"
-    user_data_folder_path = os.path.join(dirname, relative_path_to_user_data_folder)
-
-    if os.path.isdir(user_data_folder_path):
-        shutil.rmtree(user_data_folder_path)
+    if os.path.isdir(user_data_folder_abs_path):
+        shutil.rmtree(user_data_folder_abs_path)
 
     try:
         options = webdriver.ChromeOptions()
-        options.add_argument('--user-data-dir=./User_Data')
+        options.add_argument(f'--user-data-dir={user_data_folder_abs_path}')
 
         driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
 
